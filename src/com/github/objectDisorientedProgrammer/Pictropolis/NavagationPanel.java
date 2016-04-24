@@ -24,6 +24,8 @@
  */
 package com.github.objectDisorientedProgrammer.Pictropolis;
 
+import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -36,6 +38,9 @@ public class NavagationPanel extends JPanel {
 	
 	private JButton previousBtn, nextBtn;
 	private JTextField imagePathTxtFld;
+	private String previousBtnText = "prev";
+	private String nextBtnText = "next";
+	
 	
 	/**
 	 * Panel with components for selecting different images.
@@ -43,14 +48,18 @@ public class NavagationPanel extends JPanel {
 	public NavagationPanel()
 	{
 		super();
+		
+		this.setLayout(new FlowLayout());
+		
 		initializeComponents();
 		setupComponentBehavior();
 		addComponents();
 	}
 
 	private void addComponents() {
-		// TODO Auto-generated method stub
-		
+		this.add(previousBtn);
+		this.add(nextBtn);
+		this.add(imagePathTxtFld);
 	}
 
 	private void setupComponentBehavior() {
@@ -59,8 +68,9 @@ public class NavagationPanel extends JPanel {
 	}
 
 	private void initializeComponents() {
-		// TODO Auto-generated method stub
-		
+		previousBtn = new JButton(previousBtnText); // TODO use icon (also?)
+		nextBtn = new JButton(nextBtnText); // TODO use icon (also?)
+		imagePathTxtFld = new JTextField("some default text");
 	}
 
 }

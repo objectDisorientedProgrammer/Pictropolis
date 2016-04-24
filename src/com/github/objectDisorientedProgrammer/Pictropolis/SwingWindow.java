@@ -48,12 +48,12 @@ public class SwingWindow
 		
 		initializeMainWindowAndPanel();
 		
-		JPanel temp = new JPanel(new FlowLayout());
-		temp.add(new JButton("prev"));
-		temp.add(new JButton("next"));
+//		JPanel temp = new JPanel(new FlowLayout());
+//		temp.add(new JButton("prev"));
+//		temp.add(new JButton("next"));
 		
 		
-		mainPanel.add(temp, BorderLayout.PAGE_END);
+		mainPanel.add(new NavagationPanel(), BorderLayout.PAGE_END);
 		
 		mainWindow.setVisible(true);
 	}
