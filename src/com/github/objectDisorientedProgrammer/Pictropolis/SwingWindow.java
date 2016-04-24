@@ -24,6 +24,10 @@
  */
 package com.github.objectDisorientedProgrammer.Pictropolis;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -44,9 +48,19 @@ public class SwingWindow
 		
 		initializeMainWindowAndPanel();
 		
+		JPanel temp = new JPanel(new FlowLayout());
+		temp.add(new JButton("prev"));
+		temp.add(new JButton("next"));
+		
+		
+		mainPanel.add(temp, BorderLayout.PAGE_END);
+		
 		mainWindow.setVisible(true);
 	}
 	
+	/**
+	 * Create a jframe and jpanel to use as the main window.
+	 */
 	private void initializeMainWindowAndPanel()
 	{
 		mainWindow = new JFrame(windowTitle);
@@ -54,7 +68,8 @@ public class SwingWindow
 		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainWindow.setLocationRelativeTo(null);
 		
-		mainPanel = new JPanel(null); // TODO change layout manager
+		mainPanel = new JPanel(new BorderLayout(10, 10));
+		//TODO mainPane = mainWindow.getContentPane();
 		
 		mainWindow.add(mainPanel);
 	}
