@@ -38,8 +38,8 @@ public class NavagationPanel extends JPanel {
 	
 	private JButton previousBtn, nextBtn;
 	private JTextField imagePathTxtFld;
-	private String previousBtnText = "prev";
-	private String nextBtnText = "next";
+	private String previousBtnText = "prev"; // TODO use icon
+	private String nextBtnText = "next"; // TODO use icon
 	
 	
 	/**

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * @author doug
@@ -41,22 +42,14 @@ public class ImageHandler {
 	private String currentImagePath;
 	private String nextImagePath;
 	
+	private ImageIcon currentImage;
+	
 	public ImageHandler()
 	{
 		super();
-		
-		try {
-//			if(currentImagePath != null && currentImagePath != "")
-//			{
-//				
-//			}
-		    URL url = new URL(currentImagePath);
-		    BufferedImage img = ImageIO.read(url);
-		    
-		    
-		} catch (IOException e) {
-		}
-		
+		this.previousImagePath = null;
+		this.nextImagePath = null;
+		this.currentImagePath = null;
 	}
 	
 	
