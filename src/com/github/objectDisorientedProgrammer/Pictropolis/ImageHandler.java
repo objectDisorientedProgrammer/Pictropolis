@@ -31,6 +31,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * @author doug
@@ -50,9 +51,25 @@ public class ImageHandler {
 		this.previousImagePath = null;
 		this.nextImagePath = null;
 		this.currentImagePath = null;
+		this.currentImage = null;
 	}
 	
-	
+	/**
+	 * 
+	 * @param urlStr - URL to attempt
+	 * @return a BufferedImage object or null.
+	 */
+	public void attemptToLoadUrlImage(String urlStr)
+	{
+		//BufferedImage bufImg = null;
+		try {
+			BufferedImage bufImg = ImageIO.read(new URL(urlStr));
+			currentImage.setImage(bufImg);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" +urlStr, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		//return bufImg;
+	}
 
 	public String getCurrentImagePath() {
 		return currentImagePath;

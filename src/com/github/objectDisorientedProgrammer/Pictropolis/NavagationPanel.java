@@ -25,10 +25,14 @@
 package com.github.objectDisorientedProgrammer.Pictropolis;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import sun.rmi.runtime.NewThreadAction;
 
 /**
  * @author doug
@@ -38,18 +42,23 @@ public class NavagationPanel extends JPanel {
 	
 	private JButton previousBtn, nextBtn;
 	private JTextField imagePathTxtFld;
-	private String previousBtnText = "prev"; // TODO use icon
-	private String nextBtnText = "next"; // TODO use icon
+	private String previousBtnText = "<-- prev"; // TODO use icon
+	private String nextBtnText = "next -->"; // TODO use icon
+	private ImageHandler imgHandler = null;
 	
+	private int imageIndex = 0;
 	
 	/**
 	 * Panel with components for selecting different images.
+	 * @param imageHandler 
 	 */
-	public NavagationPanel()
+	public NavagationPanel(ImageHandler imageHandler)
 	{
 		super();
 		
 		this.setLayout(new FlowLayout());
+		
+		imgHandler = imageHandler;
 		
 		initializeComponents();
 		setupComponentBehavior();
@@ -62,15 +71,29 @@ public class NavagationPanel extends JPanel {
 		this.add(imagePathTxtFld);
 	}
 
-	private void setupComponentBehavior() {
-		// TODO Auto-generated method stub
+	private void setupComponentBehavior()
+	{
+		previousBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
+			}
+		});
 		
+		nextBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
+			}
+		});
 	}
 
 	private void initializeComponents() {
 		previousBtn = new JButton(previousBtnText); // TODO use icon (also?)
 		nextBtn = new JButton(nextBtnText); // TODO use icon (also?)
 		imagePathTxtFld = new JTextField("some default text");
+		
 	}
 
 }

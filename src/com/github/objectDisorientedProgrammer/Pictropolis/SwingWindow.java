@@ -34,10 +34,12 @@ import javax.swing.JPanel;
 public class SwingWindow
 {
 	private final String author = "Douglas Chidester";
-	private final String version = " v0.0.1";
+	private final String version = " v0.0.2";
 	private final String windowTitle = "Pictropolis";
-	private final int frameWidth = 450;
-	private final int frameHeight = 400;
+	private final int frameWidth = 1000;
+	private final int frameHeight = 800;
+	
+	private ImageHandler imageHandler;
 	
 	private JFrame mainWindow;
 	private JPanel mainPanel;
@@ -46,14 +48,13 @@ public class SwingWindow
 	{
 		super();
 		
+		imageHandler = new ImageHandler();
+		
 		initializeMainWindowAndPanel();
 		
-//		JPanel temp = new JPanel(new FlowLayout());
-//		temp.add(new JButton("prev"));
-//		temp.add(new JButton("next"));
+		NavagationPanel navPanel = new NavagationPanel(imageHandler);
 		
-		
-		mainPanel.add(new NavagationPanel(), BorderLayout.PAGE_END);
+		mainPanel.add(navPanel, BorderLayout.PAGE_END);
 		
 		mainWindow.setVisible(true);
 	}
