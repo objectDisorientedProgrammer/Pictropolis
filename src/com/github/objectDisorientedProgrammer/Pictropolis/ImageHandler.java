@@ -38,37 +38,53 @@ import javax.swing.JOptionPane;
  *
  */
 public class ImageHandler {
-	
+
 	private String previousImagePath;
 	private String currentImagePath;
 	private String nextImagePath;
-	
+
 	private ImageIcon currentImage;
-	
-	public ImageHandler()
-	{
+	private ImageIcon previousImage;
+	private ImageIcon nextImage;
+
+	public ImageHandler() {
 		super();
 		this.previousImagePath = null;
 		this.nextImagePath = null;
 		this.currentImagePath = null;
 		this.currentImage = null;
+		this.previousImage = null;
+		this.nextImage = null;
 	}
-	
+
 	/**
 	 * 
-	 * @param urlStr - URL to attempt
+	 * @param urlStr
+	 *            - URL to attempt
 	 * @return a BufferedImage object or null.
 	 */
-	public void attemptToLoadUrlImage(String urlStr)
-	{
-		//BufferedImage bufImg = null;
+	public void attemptToLoadUrlImage(String urlStr) {
 		try {
 			BufferedImage bufImg = ImageIO.read(new URL(urlStr));
 			currentImage.setImage(bufImg);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" +urlStr, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + urlStr, "Error",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		//return bufImg;
+	}
+
+	public void attemptToLoadUrlImage(String baseUrl, int index, String remainingUrl) {
+		String fullUrl = baseUrl + index + remainingUrl;
+		try {
+			if(currentImage != null)
+				previousImage = currentImage; // save previous image
+			
+			BufferedImage bufImg = ImageIO.read(new URL(fullUrl));
+			currentImage.setImage(bufImg);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + fullUrl, "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	public String getCurrentImagePath() {
