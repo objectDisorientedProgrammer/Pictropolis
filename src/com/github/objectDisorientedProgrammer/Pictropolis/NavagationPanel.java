@@ -32,19 +32,20 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import sun.rmi.runtime.NewThreadAction;
-
 /**
  * @author doug
  *
  */
 public class NavagationPanel extends JPanel {
 	
-	private JButton previousBtn, nextBtn;
-	private JTextField imagePathTxtFld;
+	private JButton previousBtn, nextBtn, goBtn;
+	
 	private String previousBtnText = "<-- prev"; // TODO use icon
 	private String nextBtnText = "next -->"; // TODO use icon
-	private ImageHandler imgHandler = null;
+	private String goBtnText = "go";
+	
+	private JTextField imagePathTxtFld;
+	private JTextField imageIndexTxtFld;
 	
 	private int imageIndex = 0;
 	
@@ -52,13 +53,11 @@ public class NavagationPanel extends JPanel {
 	 * Panel with components for selecting different images.
 	 * @param imageHandler 
 	 */
-	public NavagationPanel(ImageHandler imageHandler)
+	public NavagationPanel()
 	{
 		super();
 		
 		this.setLayout(new FlowLayout());
-		
-		imgHandler = imageHandler;
 		
 		initializeComponents();
 		setupComponentBehavior();
@@ -67,8 +66,10 @@ public class NavagationPanel extends JPanel {
 
 	private void addComponents() {
 		this.add(previousBtn);
+		this.add(goBtn);
 		this.add(nextBtn);
 		this.add(imagePathTxtFld);
+		this.add(imageIndexTxtFld);
 	}
 
 	private void setupComponentBehavior()
@@ -76,7 +77,7 @@ public class NavagationPanel extends JPanel {
 		previousBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
+				//imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
 			}
 		});
 		
@@ -84,7 +85,14 @@ public class NavagationPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
+				//imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
+			}
+		});
+		
+		imageIndexTxtFld.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent i) {
+				imageIndex = Integer.parseInt(imageIndexTxtFld.getText());
 			}
 		});
 	}
@@ -92,8 +100,10 @@ public class NavagationPanel extends JPanel {
 	private void initializeComponents() {
 		previousBtn = new JButton(previousBtnText); // TODO use icon (also?)
 		nextBtn = new JButton(nextBtnText); // TODO use icon (also?)
-		imagePathTxtFld = new JTextField("some default text");
+		goBtn = new JButton(goBtnText);
 		
+		imagePathTxtFld = new JTextField("some default text");
+		imageIndexTxtFld = new JTextField("some default text");
 	}
 
 }
