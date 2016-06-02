@@ -52,7 +52,7 @@ public class SwingWindow
 		
 		initializeMainWindowAndPanel();
 		
-		NavagationPanel navPanel = new NavagationPanel(imageHandler);
+		NavagationPanel navPanel = new NavagationPanel();
 		
 		mainPanel.add(navPanel, BorderLayout.PAGE_END);
 		
