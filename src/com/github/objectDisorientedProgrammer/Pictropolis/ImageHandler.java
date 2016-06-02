@@ -24,7 +24,6 @@
  */
 package com.github.objectDisorientedProgrammer.Pictropolis;
 
-import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -38,32 +37,21 @@ import javax.swing.JOptionPane;
  *
  */
 public class ImageHandler {
-
-	private String previousImagePath;
-	private String currentImagePath;
-	private String nextImagePath;
-
+	
+	private String urlString;
 	private ImageIcon currentImage;
-	private ImageIcon previousImage;
-	private ImageIcon nextImage;
 
 	public ImageHandler() {
 		super();
-		this.previousImagePath = null;
-		this.nextImagePath = null;
-		this.currentImagePath = null;
 		this.currentImage = null;
-		this.previousImage = null;
-		this.nextImage = null;
 	}
 
 	/**
-	 * 
-	 * @param urlStr
-	 *            - URL to attempt
-	 * @return a BufferedImage object or null.
+	 * Try loading an image from a URL.
+	 * @param urlStr - URL to attempt
+	 * @return currentImage
 	 */
-	public void attemptToLoadUrlImage(String urlStr) {
+	public ImageIcon attemptToLoadUrlImage(String urlStr) {
 		try {
 			BufferedImage bufImg = ImageIO.read(new URL(urlStr));
 			currentImage.setImage(bufImg);
@@ -71,28 +59,17 @@ public class ImageHandler {
 			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + urlStr, "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
+		return currentImage;
 	}
 
-	public void attemptToLoadUrlImage(String baseUrl, int index, String remainingUrl) {
-		String fullUrl = baseUrl + index + remainingUrl;
-		try {
-			if(currentImage != null)
-				previousImage = currentImage; // save previous image
-			
-			BufferedImage bufImg = ImageIO.read(new URL(fullUrl));
-			currentImage.setImage(bufImg);
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + fullUrl, "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	public String getCurrentImagePath() {
-		return currentImagePath;
-	}
-
-	public void setCurrentImagePath(String newImagePath) {
-		this.currentImagePath = newImagePath;
+	/**
+	 * Set the url to load.
+	 * @param url - well formatted website URL
+	 */
+	public void setUrlString(String url)
+	{
+		// TODO verify valid url
+		this.urlString = url;
 	}
 
 }
