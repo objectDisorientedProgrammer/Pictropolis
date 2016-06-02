@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -46,8 +47,12 @@ public class NavagationPanel extends JPanel {
 	
 	private JTextField imagePathTxtFld;
 	private JTextField imageIndexTxtFld;
+	private int imageIndex = 1; // default value of 1
 	
-	private int imageIndex = 0;
+	private JComboBox<String> validExtensionsChooser;
+	private String[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+	
+	private String fullURL = null;
 	
 	/**
 	 * Panel with components for selecting different images.
@@ -70,10 +75,18 @@ public class NavagationPanel extends JPanel {
 		this.add(nextBtn);
 		this.add(imagePathTxtFld);
 		this.add(imageIndexTxtFld);
+		this.add(validExtensionsChooser);
 	}
 
 	private void setupComponentBehavior()
 	{
+		goBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(getFullURL());
+			}
+		});
+		
 		previousBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -85,7 +98,19 @@ public class NavagationPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//imgHandler.attemptToLoadUrlImage(imagePathTxtFld.getText());
+				String currentURL = imagePathTxtFld.getText();
+				
+				++imageIndex;
+				// if next number will spill over to next place: 9 -> 10
+				if(imageIndex % 10 == 0)
+				{
+					// if the current url has a zero at the end remove it for the new url
+					if(currentURL.endsWith("0"))
+					{
+						currentURL = currentURL.substring(0, currentURL.length() - 1);
+						imagePathTxtFld.setText(currentURL); // update url
+					}
+				}
 			}
 		});
 		
@@ -103,7 +128,25 @@ public class NavagationPanel extends JPanel {
 		goBtn = new JButton(goBtnText);
 		
 		imagePathTxtFld = new JTextField("some default text");
-		imageIndexTxtFld = new JTextField("some default text");
+		imageIndexTxtFld = new JTextField("0001");
+		
+		validExtensionsChooser = new JComboBox<String>(validImageExtensions);
+		validExtensionsChooser.setSelectedIndex(0); // select first item by default
 	}
+
+	/**
+	 * @return the fullURL
+	 */
+	public String getFullURL() {
+		fullURL = imagePathTxtFld.getText() + imageIndexTxtFld.getText() + validImageExtensions[validExtensionsChooser.getSelectedIndex()];
+		return fullURL;
+	}
+
+//	/**
+//	 * @param fullURL the fullURL to set
+//	 */
+//	public void setFullURL(String fullURL) {
+//		this.fullURL = fullURL;
+//	}
 
 }
