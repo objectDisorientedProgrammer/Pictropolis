@@ -30,18 +30,18 @@ package com.github.objectDisorientedProgrammer.Pictropolis;
  */
 public class Pictropolis
 {
-	/** Create the main GUI window.
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		javax.swing.SwingUtilities.invokeLater(new Runnable()
-		{
+    /** Create the main GUI window.
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        javax.swing.SwingUtilities.invokeLater(new Runnable()
+        {
             public void run()
             {
-            	new SwingWindow();
+                new SwingWindow();
             }
         });
-	}
+    }
 
 }

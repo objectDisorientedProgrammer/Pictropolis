@@ -25,8 +25,11 @@
 package com.github.objectDisorientedProgrammer.Pictropolis;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -35,42 +38,117 @@ import javax.swing.JTextField;
  *
  */
 public class NavagationPanel extends JPanel {
-	
-	private JButton previousBtn, nextBtn;
-	private JTextField imagePathTxtFld;
-	private String previousBtnText = "prev"; // TODO use icon
-	private String nextBtnText = "next"; // TODO use icon
-	
-	
-	/**
-	 * Panel with components for selecting different images.
-	 */
-	public NavagationPanel()
-	{
-		super();
-		
-		this.setLayout(new FlowLayout());
-		
-		initializeComponents();
-		setupComponentBehavior();
-		addComponents();
-	}
+    
+    private JButton previousBtn, nextBtn, goBtn;
+    
+    private String previousBtnText = "<-- prev"; // TODO use icon
+    private String nextBtnText = "next -->"; // TODO use icon
+    private String goBtnText = "go";
+    
+    private JTextField imagePathTxtFld;
+    private JTextField imageIndexTxtFld;
+    private int imageIndex = 1; // default value of 1
+    
+    private JComboBox<String> validExtensionsChooser;
+    private String[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+    
+    private String fullURL = null;
+    private ImageHandler imgHandler;
+    
+    /**
+     * Panel with components for selecting different images.
+     * @param imageHandler 
+     */
+    public NavagationPanel(ImageHandler imageHandler)
+    {
+        super();
+        this.imgHandler = imageHandler;
+        
+        this.setLayout(new FlowLayout());
+        
+        initializeComponents();
+        setupComponentBehavior();
+        addComponents();
+    }
 
-	private void addComponents() {
-		this.add(previousBtn);
-		this.add(nextBtn);
-		this.add(imagePathTxtFld);
-	}
+    private void addComponents() {
+        this.add(previousBtn);
+        this.add(goBtn);
+        this.add(nextBtn);
+        this.add(imagePathTxtFld);
+        this.add(imageIndexTxtFld);
+        this.add(validExtensionsChooser);
+    }
 
-	private void setupComponentBehavior() {
-		// TODO Auto-generated method stub
-		
-	}
+    private void setupComponentBehavior()
+    {
+        goBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imgHandler.attemptToLoadUrlImage(getFullURL());
+            }
+        });
+        
+        previousBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                imgHandler.attemptToLoadUrlImage(getFullURL());
+            }
+        });
+        
+        nextBtn.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String currentURL = imagePathTxtFld.getText();
+                
+                ++imageIndex;
+                // if next number will spill over to next place: 9 -> 10
+                if(imageIndex % 10 == 0)
+                {
+                    // if the current url has a zero at the end remove it for the new url
+                    if(currentURL.endsWith("0"))
+                    {
+                        currentURL = currentURL.substring(0, currentURL.length() - 1);
+                        imagePathTxtFld.setText(currentURL); // update url
+                    }
+                }
+            }
+        });
+        
+        imageIndexTxtFld.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent i) {
+                imageIndex = Integer.parseInt(imageIndexTxtFld.getText());
+            }
+        });
+    }
 
-	private void initializeComponents() {
-		previousBtn = new JButton(previousBtnText); // TODO use icon (also?)
-		nextBtn = new JButton(nextBtnText); // TODO use icon (also?)
-		imagePathTxtFld = new JTextField("some default text");
-	}
+    private void initializeComponents() {
+        previousBtn = new JButton(previousBtnText); // TODO use icon (also?)
+        nextBtn = new JButton(nextBtnText); // TODO use icon (also?)
+        goBtn = new JButton(goBtnText);
+        
+        imagePathTxtFld = new JTextField("some default text");
+        imageIndexTxtFld = new JTextField("1");
+        
+        validExtensionsChooser = new JComboBox<String>(validImageExtensions);
+        validExtensionsChooser.setSelectedIndex(0); // select first item by default
+    }
+
+    /**
+     * @return the fullURL
+     */
+    public String getFullURL() {
+        fullURL = imagePathTxtFld.getText() + imageIndexTxtFld.getText() + validImageExtensions[validExtensionsChooser.getSelectedIndex()];
+        return fullURL;
+    }
+
+//  /**
+//   * @param fullURL the fullURL to set
+//   */
+//  public void setFullURL(String fullURL) {
+//      this.fullURL = fullURL;
+//  }
 
 }
