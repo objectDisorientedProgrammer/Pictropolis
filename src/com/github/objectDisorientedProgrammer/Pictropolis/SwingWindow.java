@@ -33,46 +33,46 @@ import javax.swing.JPanel;
 
 public class SwingWindow
 {
-	private final String author = "Douglas Chidester";
-	private final String version = " v0.0.2";
-	private final String windowTitle = "Pictropolis";
-	private final int frameWidth = 1000;
-	private final int frameHeight = 800;
-	
-	private ImageHandler imageHandler;
-	
-	private JFrame mainWindow;
-	private JPanel mainPanel;
-	
-	public SwingWindow()
-	{
-		super();
-		
-		imageHandler = new ImageHandler();
-		
-		initializeMainWindowAndPanel();
-		
-		NavagationPanel navPanel = new NavagationPanel();
-		
-		mainPanel.add(navPanel, BorderLayout.PAGE_END);
-		
-		mainWindow.setVisible(true);
-	}
-	
-	/**
-	 * Create a jframe and jpanel to use as the main window.
-	 */
-	private void initializeMainWindowAndPanel()
-	{
-		mainWindow = new JFrame(windowTitle);
-		mainWindow.setSize(frameWidth, frameHeight);
-		mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainWindow.setLocationRelativeTo(null);
-		
-		mainPanel = new JPanel(new BorderLayout(10, 10));
-		//TODO mainPane = mainWindow.getContentPane();
-		
-		mainWindow.add(mainPanel);
-	}
+    private final String author = "Douglas Chidester";
+    private final String version = " v0.0.2";
+    private final String windowTitle = "Pictropolis";
+    private final int frameWidth = 1000;
+    private final int frameHeight = 800;
+    
+    private ImageHandler imageHandler;
+    
+    private JFrame mainWindow;
+    private JPanel mainPanel;
+    
+    public SwingWindow()
+    {
+        super();
+        
+        imageHandler = new ImageHandler();
+        
+        initializeMainWindowAndPanel();
+        
+        NavagationPanel navPanel = new NavagationPanel(imageHandler);
+        
+        mainPanel.add(navPanel, BorderLayout.PAGE_END);
+        
+        mainWindow.setVisible(true);
+    }
+    
+    /**
+     * Create a jframe and jpanel to use as the main window.
+     */
+    private void initializeMainWindowAndPanel()
+    {
+        mainWindow = new JFrame(windowTitle);
+        mainWindow.setSize(frameWidth, frameHeight);
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setLocationRelativeTo(null);
+        
+        mainPanel = new JPanel(new BorderLayout(10, 10));
+        //TODO mainPane = mainWindow.getContentPane();
+        
+        mainWindow.add(mainPanel);
+    }
 
 }

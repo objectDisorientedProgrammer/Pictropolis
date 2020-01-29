@@ -37,39 +37,40 @@ import javax.swing.JOptionPane;
  *
  */
 public class ImageHandler {
-	
-	private String urlString;
-	private ImageIcon currentImage;
+    
+    private String urlString;
+    private ImageIcon currentImage;
 
-	public ImageHandler() {
-		super();
-		this.currentImage = null;
-	}
+    public ImageHandler() {
+        super();
+        this.currentImage = null;
+    }
 
-	/**
-	 * Try loading an image from a URL.
-	 * @param urlStr - URL to attempt
-	 * @return currentImage
-	 */
-	public ImageIcon attemptToLoadUrlImage(String urlStr) {
-		try {
-			BufferedImage bufImg = ImageIO.read(new URL(urlStr));
-			currentImage.setImage(bufImg);
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + urlStr, "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		return currentImage;
-	}
+    /**
+     * Try loading an image from a URL.
+     * @param urlStr - URL to attempt
+     * @return currentImage
+     */
+    public ImageIcon attemptToLoadUrlImage(String urlStr) {
+        try {
+            BufferedImage bufImg = ImageIO.read(new URL(urlStr));
+            currentImage.setImage(bufImg);
+        } catch (IOException e) {
+            // TODO UI should be done in one place...
+            JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + urlStr, "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        return currentImage;
+    }
 
-	/**
-	 * Set the url to load.
-	 * @param url - well formatted website URL
-	 */
-	public void setUrlString(String url)
-	{
-		// TODO verify valid url
-		this.urlString = url;
-	}
+    /**
+     * Set the url to load.
+     * @param url - well formatted website URL
+     */
+    public void setUrlString(String url)
+    {
+        // TODO verify valid url
+        this.urlString = url;
+    }
 
 }
