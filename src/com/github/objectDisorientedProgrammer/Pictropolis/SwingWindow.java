@@ -26,9 +26,16 @@ package com.github.objectDisorientedProgrammer.Pictropolis;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class SwingWindow
@@ -39,24 +46,22 @@ public class SwingWindow
     private final int frameWidth = 1000;
     private final int frameHeight = 800;
     
-    private ImageHandler imageHandler;
+    private static ImageHandler imageHandler;
+    private static NavagationPanel navPanel;
     
     private JFrame mainWindow;
-    private JPanel mainPanel;
+    private static JPanel mainPanel;
+    
+    private static ImageIcon img;
     
     public SwingWindow()
     {
         super();
+        initializeMainWindowAndPanel();
         
         imageHandler = new ImageHandler();
         
-        initializeMainWindowAndPanel();
         
-        NavagationPanel navPanel = new NavagationPanel(imageHandler);
-        
-        mainPanel.add(navPanel, BorderLayout.PAGE_END);
-        
-        mainWindow.setVisible(true);
     }
     
     /**
@@ -71,8 +76,48 @@ public class SwingWindow
         
         mainPanel = new JPanel(new BorderLayout(10, 10));
         //TODO mainPane = mainWindow.getContentPane();
+        navPanel = new NavagationPanel();
+        mainPanel.add(navPanel, BorderLayout.PAGE_END);
         
         mainWindow.add(mainPanel);
+        
+        mainWindow.setVisible(true);
+    }
+    
+    public void paint(Graphics g) {
+        mainPanel.paint(g);
+        Graphics2D g2d = (Graphics2D) g; // initialize graphics
+        g2d.drawImage(img.getImage(), (mainPanel.getWidth() - img.getIconWidth()) / 2,
+                (mainPanel.getHeight() - img.getIconHeight()) / 2, mainPanel); // draw
+        Toolkit.getDefaultToolkit().sync();
+        g.dispose();
+    }
+    
+    private static ImageIcon loadImage()
+    {
+        ImageIcon icon = null;
+        String url = navPanel.getFullURL();
+        
+        try
+        {
+            icon = imageHandler.attemptToLoadUrlImage(url);
+        } catch(MalformedURLException e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + url, "Bad URL",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + url, "IO Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return icon == null ? new ImageIcon() : icon; // TODO load default image
+    }
+
+    public static void displayImage()
+    {
+        img = loadImage();
+        mainPanel.repaint();
     }
 
 }

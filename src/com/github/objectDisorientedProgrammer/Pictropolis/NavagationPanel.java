@@ -27,7 +27,6 @@ package com.github.objectDisorientedProgrammer.Pictropolis;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -53,16 +52,15 @@ public class NavagationPanel extends JPanel {
     private String[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
     
     private String fullURL = null;
-    private ImageHandler imgHandler;
+    
     
     /**
      * Panel with components for selecting different images.
      * @param imageHandler 
      */
-    public NavagationPanel(ImageHandler imageHandler)
+    public NavagationPanel()
     {
         super();
-        this.imgHandler = imageHandler;
         
         this.setLayout(new FlowLayout());
         
@@ -79,20 +77,24 @@ public class NavagationPanel extends JPanel {
         this.add(imageIndexTxtFld);
         this.add(validExtensionsChooser);
     }
+    
+    
 
     private void setupComponentBehavior()
     {
         goBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                imgHandler.attemptToLoadUrlImage(getFullURL());
+                SwingWindow.displayImage();
             }
         });
         
         previousBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                imgHandler.attemptToLoadUrlImage(getFullURL());
+                int index = Integer.parseInt(imagePathTxtFld.getText());
+                --index;
+                imagePathTxtFld.setText(""+index);
             }
         });
         
@@ -143,12 +145,5 @@ public class NavagationPanel extends JPanel {
         fullURL = imagePathTxtFld.getText() + imageIndexTxtFld.getText() + validImageExtensions[validExtensionsChooser.getSelectedIndex()];
         return fullURL;
     }
-
-//  /**
-//   * @param fullURL the fullURL to set
-//   */
-//  public void setFullURL(String fullURL) {
-//      this.fullURL = fullURL;
-//  }
 
 }

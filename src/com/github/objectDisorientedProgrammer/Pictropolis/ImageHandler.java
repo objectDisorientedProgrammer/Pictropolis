@@ -26,11 +26,11 @@ package com.github.objectDisorientedProgrammer.Pictropolis;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  * @author doug
@@ -43,23 +43,20 @@ public class ImageHandler {
 
     public ImageHandler() {
         super();
-        this.currentImage = null;
+        this.currentImage = new ImageIcon();
     }
 
     /**
      * Try loading an image from a URL.
      * @param urlStr - URL to attempt
      * @return currentImage
+     * @throws IOException 
+     * @throws MalformedURLException 
      */
-    public ImageIcon attemptToLoadUrlImage(String urlStr) {
-        try {
-            BufferedImage bufImg = ImageIO.read(new URL(urlStr));
-            currentImage.setImage(bufImg);
-        } catch (IOException e) {
-            // TODO UI should be done in one place...
-            JOptionPane.showMessageDialog(null, e.getMessage().toString() + "\n" + urlStr, "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+    public ImageIcon attemptToLoadUrlImage(String urlStr) throws MalformedURLException, IOException {
+        BufferedImage bufImg = ImageIO.read(new URL(urlStr));
+        System.out.println("attempting URL: '"+urlStr+"'");
+        currentImage.setImage(bufImg);
         return currentImage;
     }
 
