@@ -57,6 +57,7 @@ public class ImageHandler {
         BufferedImage bufImg = ImageIO.read(new URL(urlStr));
         System.out.println("attempting URL: '"+urlStr+"'");
         currentImage.setImage(bufImg);
+        System.out.println("set image...");
         return currentImage;
     }
 

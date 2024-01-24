@@ -40,8 +40,8 @@ import javax.swing.JPanel;
 
 public class SwingWindow
 {
-    private final String author = "Douglas Chidester";
-    private final String version = " v0.0.2";
+    private final String author = "Doug Chidester";
+    private final String version = " v0.0.3";
     private final String windowTitle = "Pictropolis";
     private final int frameWidth = 1000;
     private final int frameHeight = 800;

@@ -49,7 +49,8 @@ public class NavagationPanel extends JPanel {
     private int imageIndex = 1; // default value of 1
     
     private JComboBox<String> validExtensionsChooser;
-    private String[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+    // keep the extensions in alphabetical order
+    private String[] validImageExtensions = { ".gif", ".jpg", ".jpeg", ".png" };
     
     private String fullURL = null;
     
@@ -121,21 +122,22 @@ public class NavagationPanel extends JPanel {
         imageIndexTxtFld.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent i) {
-                imageIndex = Integer.parseInt(imageIndexTxtFld.getText());
+                if (!imageIndexTxtFld.getText().isEmpty())
+                    imageIndex = Integer.parseInt(imageIndexTxtFld.getText());
             }
         });
     }
 
     private void initializeComponents() {
-        previousBtn = new JButton(previousBtnText); // TODO use icon (also?)
-        nextBtn = new JButton(nextBtnText); // TODO use icon (also?)
+        previousBtn = new JButton(previousBtnText); // TODO use icon
+        nextBtn = new JButton(nextBtnText); // TODO use icon
         goBtn = new JButton(goBtnText);
         
-        imagePathTxtFld = new JTextField("some default text");
-        imageIndexTxtFld = new JTextField("1");
+        imagePathTxtFld = new JTextField("some default text", 20);
+        imageIndexTxtFld = new JTextField("1", 4);
         
         validExtensionsChooser = new JComboBox<String>(validImageExtensions);
-        validExtensionsChooser.setSelectedIndex(0); // select first item by default
+        validExtensionsChooser.setSelectedIndex(1); // select second item by default
     }
 
     /**
